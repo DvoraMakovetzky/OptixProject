@@ -1,0 +1,67 @@
+# קבצי מערכת הפעלה
+.DS_Store
+Thumbs.db
+
+# תיקיות פלט
+bin/
+obj/
+
+# קבצי משתמש של Visual Studio
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# קבצי עבודה של Visual Studio Code
+.vscode/
+
+# חבילות NuGet
+*.nupkg
+# תיקיות חבילות מקומיות
+packages/
+# קובץ נעילת חבילות
+project.lock.json
+# קבצי פרויקט של NuGet
+project.fragment.lock.json
+
+# קבצי לוג
+*.log
+
+# קבצי Build
+BuildOutput/
+.BuildArtifacts/
+
+# קבצי פלט של תיעוד
+*.rpt
+
+# תיקיות cache של Entity Framework
+aspnet-compiler/
+aspnet-compiler/bin/
+aspnet-compiler/obj/
+
+# קבצי Debug
+*.swp
+
+# קבצי Azure
+.publishsettings
+.redgate/
+
+# קבצי מידע של IIS
+*.vspscc
+*.vssscc
+
+# קבצי Test Result
+TestResult.xml
+TestResults/
+
+# קבצי Docker
+Dockerfile
+.dockerignore
+
+# Secrets
+secrets.json
+
+# סביבות וירטואליות
+.vagrant/
