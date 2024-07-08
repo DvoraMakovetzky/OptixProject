@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Models.Models;
+
 namespace OptixProject
 {
     public class Program
@@ -12,7 +16,9 @@ namespace OptixProject
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            /////////////connectionString
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<CustomerContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultDatabase")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
