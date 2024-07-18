@@ -3,6 +3,7 @@ using DAL.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Models.Models;
+using BL;
 
 //namespace OptixProject
 //{
@@ -39,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(myCors);
 app.UseHttpsRedirection();
+// Add your middleware here
+app.UseMiddleware<IdValidationMiddleware>();
 
 app.UseAuthorization();
 
