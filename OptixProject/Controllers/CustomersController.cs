@@ -1,5 +1,6 @@
 ﻿using DAL.Dtos;
 using DAL.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Models;
@@ -8,6 +9,7 @@ namespace OptixProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomer _dbCustomer;
