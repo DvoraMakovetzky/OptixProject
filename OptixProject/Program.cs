@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 //namespace OptixProject
 //{
@@ -81,6 +82,10 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File(@"C:\Users\This User\Documents\Studies\.NET Core\OptixProject\myLogDoc.txt",
+    rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -95,6 +100,7 @@ app.UseMiddleware<JwtMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 // Add your middleware here
+app.UseMiddleware<LogMiddleware>();
 //app.UseMiddleware<IdValidationMiddleware>();
 
 
