@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,8 +49,9 @@ public class JwtMiddleware
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = jwtToken.Claims.First(x => x.Type == "sub").Value;
-
+                var role = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value;
                 context.Items["User"] = userId;
+                context.Items["Role"] = role;
             }
             catch (Exception ex)
             {

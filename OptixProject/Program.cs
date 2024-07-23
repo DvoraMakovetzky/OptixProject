@@ -21,6 +21,12 @@ string myCors = "_myCors";
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole("Customer"));
+    options.AddPolicy("AdminOrCustomer", policy => policy.RequireRole("Admin", "Customer"));
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -83,7 +89,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.File(@"C:\Users\This User\Documents\Studies\.NET Core\OptixProject\myLogDoc.txt",
+    .WriteTo.File(@"C:\Users\This User\Documents\Studies\.NET Core\OptixProject\LoggerFiles\myLogDoc.txt",
     rollingInterval: RollingInterval.Day)
     .CreateLogger();
 var app = builder.Build();

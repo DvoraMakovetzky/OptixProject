@@ -18,6 +18,7 @@ namespace OptixProject.Controllers
             _dbCustomer = dbCustomer;
         }
         [HttpPost]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Post([FromBody] CustomerDto value)
         {
             bool created = await _dbCustomer.CreateCustomer(value);
@@ -28,6 +29,7 @@ namespace OptixProject.Controllers
             return BadRequest();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Delete(long id)
         {
             bool deleted=await _dbCustomer.DeleteCustomer(id);
@@ -36,12 +38,14 @@ namespace OptixProject.Controllers
             return BadRequest();
         }
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<Customer> Get(long id)
         {
             Customer get=await _dbCustomer.GetCustomer(id);
             return get;
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Put(long id,[FromBody] CustomerDto value)
         {
             bool update=await _dbCustomer.UpdateCustomer(id, value);
