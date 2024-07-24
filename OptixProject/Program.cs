@@ -107,7 +107,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 // Add your middleware here
 app.UseMiddleware<LogMiddleware>();
-//app.UseMiddleware<IdValidationMiddleware>();
 
 
 app.MapControllers();

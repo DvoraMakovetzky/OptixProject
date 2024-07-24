@@ -19,8 +19,31 @@ namespace DAL.Data
             _context = context;
             _mapper = mapper;
         }
-        public async Task<bool> CreateCustomer(CustomerDto c)
+        public bool IsValidIsraeliId(long id)
         {
+            var idString = id.ToString().PadLeft(9, '0'); // Ensure the ID is 9 digits
+            if (idString.Length != 9 || !idString.All(char.IsDigit))
+            {
+                return false;
+            }
+
+            int sum = 0;
+            for (int i = 0; i < 9; i++)
+            {
+                int num = (int)char.GetNumericValue(idString[i]);
+                int weight = i % 2 == 0 ? num : num * 2;
+                sum += weight > 9 ? weight - 9 : weight;
+            }
+
+            return sum % 10 == 0;
+        }
+    
+    public async Task<bool> CreateCustomer(CustomerDto c)
+        {
+            if (!IsValidIsraeliId(c.Id)) // Assuming CustomerDto has a property Id
+            {
+                throw new ArgumentException("Invalid Israeli ID.");
+            }
             await _context.Customers.AddAsync(_mapper.Map<Customer>(c));
             await _context.SaveChangesAsync();
             return true;
@@ -50,6 +73,10 @@ namespace DAL.Data
 
         public async Task<bool> UpdateCustomer(long id, CustomerDto updatedCustomer)
         {
+            if (!IsValidIsraeliId(updatedCustomer.Id)) // Assuming CustomerDto has a property Id
+            {
+                throw new ArgumentException("Invalid Israeli ID.");
+            }
             Customer existingCustomer = await _context.Customers.FindAsync(id);
             if (existingCustomer == null)
             {
